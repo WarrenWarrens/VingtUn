@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://crvf366ymfc6b"]
+
+[ext_resource type="Script" uid="uid://cju7ch6rdwa8s" path="res://scenes/discard_slot.gd" id="1_bre8f"]
+[ext_resource type="Texture2D" uid="uid://b46jm230r72gg" path="res://assets/Cards Pixel Art - Pack (64x96)/black_white/448_384.png" id="2_uv6hg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya4ey"]
+size = Vector2(64, 96)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_bre8f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_uv6hg")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ya4ey")

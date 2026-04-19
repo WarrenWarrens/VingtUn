@@ -1,0 +1,460 @@
+[gd_scene load_steps=19 format=3 uid="uid://ddincjtmnc65x"]
+
+[ext_resource type="Script" uid="uid://bhfdx30yk4dj1" path="res://scenes/card_manager.gd" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://b2h16c1h0yjwo" path="res://scenes/view_manager.gd" id="1_eb6dy"]
+[ext_resource type="Script" uid="uid://bhauo7vimli6j" path="res://scenes/player_hand.gd" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://bfalmeh8enwg3" path="res://scenes/card_slot.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://w638r3cwxnwk" path="res://scenes/deck.tscn" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://cx1uuxan6ju37" path="res://scenes/deck.gd" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://dcvnm4tckb6bk" path="res://scenes/input_manager.gd" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://crvf366ymfc6b" path="res://scenes/discard.tscn" id="7_choun"]
+[ext_resource type="Shader" uid="uid://4huo4gj6suvn" path="res://scenes/main.gdshader" id="7_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://q0vb1ruyd7bv" path="res://assets/cards2/0_384.png" id="8_tipki"]
+[ext_resource type="Shader" uid="uid://ctx4l2wdk77ew" path="res://assets/shaders/swirl.gdshader" id="9_ya4ey"]
+[ext_resource type="Script" uid="uid://cx2ex2rey4su2" path="res://scenes/settings_menu.gd" id="10_choun"]
+[ext_resource type="Script" uid="uid://djogxwjui4vnn" path="res://scenes/shop.gd" id="12_a8y0u"]
+[ext_resource type="Script" uid="uid://dllg5l58t8sx4" path="res://scenes/gui.gd" id="13_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://bqqenfkpl5358" path="res://assets/cards2/384_384.png" id="14_jkv2x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb6dy"]
+shader = ExtResource("9_ya4ey")
+shader_parameter/polar_coordinates = false
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 2.0
+shader_parameter/polar_repeat = 2.0
+shader_parameter/spin_rotation = 1.0
+shader_parameter/spin_speed = 5.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.776471, 0, 0.886275, 1)
+shader_parameter/colour_2 = Color(0.352941, 0.247059, 1, 0.658824)
+shader_parameter/colour_3 = Color(0.980392, 0.690196, 0.109804, 1)
+shader_parameter/contrast = 4.0
+shader_parameter/spin_amount = 0.5
+shader_parameter/pixel_filter = 500.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
+shader = ExtResource("7_o6xl0")
+shader_parameter/polar_coordinates = false
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 2.0
+shader_parameter/polar_repeat = 1.0
+shader_parameter/spin_rotation = 0.0
+shader_parameter/spin_speed = 2.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0, 1, 1, 1)
+shader_parameter/colour_2 = Color(1, 1, 1, 1)
+shader_parameter/colour_3 = Color(0.957219, 0, 0.16895, 1)
+shader_parameter/contrast = 2.0
+shader_parameter/spin_amount = 0.36
+shader_parameter/pixel_filter = 320.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
+shader = ExtResource("7_o6xl0")
+shader_parameter/polar_coordinates = true
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 0.7
+shader_parameter/polar_repeat = 1.0
+shader_parameter/spin_rotation = 0.0
+shader_parameter/spin_speed = 5.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.614575, 0.366435, 0.981204, 1)
+shader_parameter/colour_2 = Color(0.447716, 0.295669, 0.20556, 1)
+shader_parameter/colour_3 = Color(0.0165796, 1.18522e-06, 0.154694, 1)
+shader_parameter/contrast = 2.0
+shader_parameter/spin_amount = 0.36
+shader_parameter/pixel_filter = 700.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_eb6dy")
+
+[node name="DragLayer" type="CanvasLayer" parent="."]
+layer = 15
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -5
+
+[node name="BG1" type="ColorRect" parent="Background"]
+z_index = -5
+material = SubResource("ShaderMaterial_eb6dy")
+offset_left = -2.0
+offset_top = 5.0
+offset_right = 1917.0
+offset_bottom = 1085.0
+color = Color(0.964773, 0.848416, 0.869401, 1)
+
+[node name="BG2" type="ColorRect" parent="Background"]
+visible = false
+z_index = -10
+material = SubResource("ShaderMaterial_o6xl0")
+offset_right = 1919.0
+offset_bottom = 1080.0
+color = Color(0.964773, 0.848416, 0.869401, 1)
+
+[node name="BG3" type="ColorRect" parent="Background"]
+visible = false
+z_index = -10
+material = SubResource("ShaderMaterial_tipki")
+offset_right = 1919.0
+offset_bottom = 1080.0
+color = Color(0.964773, 0.848416, 0.869401, 1)
+
+[node name="GameView" type="Node2D" parent="."]
+
+[node name="Deck" parent="GameView" instance=ExtResource("4_jyhfs")]
+light_mask = 2
+visibility_layer = 2
+z_index = 15
+script = ExtResource("5_tbgi4")
+
+[node name="CardManager" type="Node2D" parent="GameView"]
+script = ExtResource("1_0wfyh")
+
+[node name="InputManager" type="Node2D" parent="GameView"]
+script = ExtResource("6_tefeu")
+
+[node name="CardSlot" parent="GameView" instance=ExtResource("3_sugp2")]
+position = Vector2(795, 367)
+scale = Vector2(2.5, 2.5)
+
+[node name="PlayerHand" type="Node2D" parent="GameView"]
+script = ExtResource("3_jyhfs")
+
+[node name="DiscardSlot" parent="GameView" instance=ExtResource("7_choun")]
+position = Vector2(509, 367)
+scale = Vector2(2.5, 2.5)
+
+[node name="CardhandArea" type="Sprite2D" parent="GameView"]
+self_modulate = Color(1, 1, 1, 0.368627)
+z_index = -5
+position = Vector2(674, 890)
+rotation = 1.5708
+scale = Vector2(3.55349, 13.1418)
+texture = ExtResource("8_tipki")
+
+[node name="ColorRect" type="ColorRect" parent="GameView"]
+offset_left = 1340.0
+offset_top = 735.0
+offset_right = 1820.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="GameView"]
+offset_left = 1381.0
+offset_top = 770.0
+offset_right = 1780.0
+offset_bottom = 1041.0
+
+[node name="ShopView" type="Node2D" parent="."]
+visible = false
+script = ExtResource("12_a8y0u")
+
+[node name="Control" type="Control" parent="ShopView"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 369.0
+offset_bottom = 321.0
+
+[node name="BackgroundRect" type="ColorRect" parent="ShopView/Control"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 600.0
+offset_right = 1285.0
+offset_bottom = 1041.0
+color = Color(0, 0, 0, 1)
+
+[node name="BackgroundRect2" type="ColorRect" parent="ShopView/Control"]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 632.0
+offset_right = 1254.0
+offset_bottom = 1010.0
+color = Color(0.433266, 0.433266, 0.433266, 1)
+
+[node name="TabBar" type="HBoxContainer" parent="ShopView/Control"]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 945.0
+offset_right = 799.0
+offset_bottom = 977.0
+
+[node name="CardsTabButton" type="Button" parent="ShopView/Control/TabBar"]
+visible = false
+layout_mode = 2
+text = "Cards"
+
+[node name="SpecialTabButton" type="Button" parent="ShopView/Control/TabBar"]
+visible = false
+layout_mode = 2
+text = "Special"
+
+[node name="ColorRect" type="ColorRect" parent="ShopView/Control/TabBar"]
+visible = false
+custom_minimum_size = Vector2(300, 25)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="ShopView/Control/TabBar/ColorRect"]
+visible = false
+layout_mode = 0
+offset_left = 87.0
+offset_top = 9.0
+offset_right = 185.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Cards 4 Sale!"
+
+[node name="ShopContainer" type="HBoxContainer" parent="ShopView/Control"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 705.0
+offset_right = 1130.0
+offset_bottom = 1018.0
+
+[node name="CardsSection" type="HBoxContainer" parent="ShopView/Control/ShopContainer"]
+layout_mode = 2
+
+[node name="ShopSlot1" type="VBoxContainer" parent="ShopView/Control/ShopContainer/CardsSection"]
+layout_mode = 2
+
+[node name="CardDisplay" type="TextureRect" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot1"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot1"]
+layout_mode = 2
+
+[node name="ShopSlot2" type="VBoxContainer" parent="ShopView/Control/ShopContainer/CardsSection"]
+layout_mode = 2
+
+[node name="CardDisplay" type="TextureRect" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot2"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot2"]
+layout_mode = 2
+
+[node name="ShopSlot3" type="VBoxContainer" parent="ShopView/Control/ShopContainer/CardsSection"]
+layout_mode = 2
+
+[node name="CardDisplay" type="TextureRect" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot3"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot3"]
+layout_mode = 2
+
+[node name="ShopSlot4" type="VBoxContainer" parent="ShopView/Control/ShopContainer/CardsSection"]
+layout_mode = 2
+
+[node name="CardDisplay" type="TextureRect" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot4"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot4"]
+layout_mode = 2
+
+[node name="ShopSlot5" type="VBoxContainer" parent="ShopView/Control/ShopContainer/CardsSection"]
+layout_mode = 2
+
+[node name="CardDisplay" type="TextureRect" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot5"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="ShopView/Control/ShopContainer/CardsSection/ShopSlot5"]
+layout_mode = 2
+
+[node name="SpecialSection" type="VBoxContainer" parent="ShopView/Control/ShopContainer"]
+layout_mode = 2
+
+[node name="CardDisplay" type="TextureRect" parent="ShopView/Control/ShopContainer/SpecialSection"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="ShopView/Control/ShopContainer/SpecialSection"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="ShopView/Control/ShopContainer/SpecialSection"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="ShopView/Control/ShopContainer/SpecialSection/ColorRect"]
+layout_mode = 2
+offset_right = 150.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Special Price!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="ShopView"]
+offset_left = 1340.0
+offset_top = 735.0
+offset_right = 1820.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="ShopView"]
+offset_left = 1381.0
+offset_top = 770.0
+offset_right = 1780.0
+offset_bottom = 1041.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1340.0
+offset_right = 1820.0
+offset_bottom = 757.0
+script = ExtResource("13_jkv2x")
+
+[node name="ColorRect2" type="ColorRect" parent="UI/GUI"]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 765.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="UI/GUI"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 35.0
+offset_right = 440.0
+offset_bottom = 770.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/GUI/ColorRect"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 35.0
+offset_right = 449.0
+offset_bottom = 770.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GUI/ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RoundLabel" type="Label" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+
+[node name="CeilingLabel" type="Label" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="MoneyLabel" type="Label" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="DeckRemainingLabel" type="Label" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="DeckTotalLabel" type="Label" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="DiscardLabel" type="Label" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="Settings" type="Button" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Settings
+"
+
+[node name="Continue" type="Button" parent="UI/GUI/ColorRect/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Continue"
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/GUI/ColorRect/MarginContainer"]
+position = Vector2(161, 820)
+scale = Vector2(2.46875, 2.47917)
+texture = ExtResource("14_jkv2x")
+
+[node name="Settings" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+script = ExtResource("10_choun")
+
+[node name="Overlay" type="ColorRect" parent="Settings"]
+offset_right = 319.0
+offset_bottom = 219.0
+
+[node name="BlurRect" type="ColorRect" parent="Settings"]
+offset_right = 319.0
+offset_bottom = 219.0
+
+[node name="Panel" type="PanelContainer" parent="Settings"]
+offset_right = 319.0
+offset_bottom = 219.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/Panel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Settings
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Settings/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="Settings/Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Panel/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[node name="MainMenuButton" type="Button" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[connection signal="pressed" from="UI/GUI/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/Play" to="GameView/CardSlot" method="_on_play_pressed"]
+[connection signal="pressed" from="UI/GUI/ColorRect/MarginContainer/VBoxContainer/HBoxContainer/Continue" to="." method="_on_continue_pressed"]

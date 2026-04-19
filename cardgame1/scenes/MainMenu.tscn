@@ -1,0 +1,127 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1exggoon56x5"]
+
+[ext_resource type="Script" uid="uid://cklvk7rqmhhr" path="res://scenes/main_menu.gd" id="1_yqorp"]
+[ext_resource type="Shader" uid="uid://4huo4gj6suvn" path="res://scenes/main.gdshader" id="2_0ykhv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2wh52"]
+shader = ExtResource("2_0ykhv")
+shader_parameter/polar_coordinates = true
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 0.7
+shader_parameter/polar_repeat = 1.0
+shader_parameter/spin_rotation = 0.0
+shader_parameter/spin_speed = 5.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.614575, 0.366435, 0.981204, 1)
+shader_parameter/colour_2 = Color(0.447716, 0.295669, 0.20556, 1)
+shader_parameter/colour_3 = Color(0.0165796, 1.18522e-06, 0.154694, 1)
+shader_parameter/contrast = 2.0
+shader_parameter/spin_amount = 0.36
+shader_parameter/pixel_filter = 700.0
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_yqorp")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 1920.0
+offset_bottom = 500.0
+theme_override_font_sizes/font_size = 300
+text = "Vingt-Un"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_top = 500.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="MenuButtons" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Play" type="Button" parent="CenterContainer/MenuButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Play"
+
+[node name="Options" type="Button" parent="CenterContainer/MenuButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Settings"
+
+[node name="Credits" type="Button" parent="CenterContainer/MenuButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Credits"
+
+[node name="Exit" type="Button" parent="CenterContainer/MenuButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Exit"
+
+[node name="SettingsMenu" type="VBoxContainer" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Fullscreen" type="CheckBox" parent="CenterContainer/SettingsMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+text = "Fullscreen"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/SettingsMenu"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="Label" type="Label" parent="CenterContainer/SettingsMenu/MusicVolumeSlider"]
+custom_minimum_size = Vector2(484, 55)
+layout_mode = 0
+offset_top = -16.0
+offset_right = 484.0
+offset_bottom = 39.0
+theme_override_font_sizes/font_size = 40
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/SettingsMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Back"
+
+[node name="CreditsMenu" type="VBoxContainer" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/CreditsMenu"]
+custom_minimum_size = Vector2(1000, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 120
+text = "Ryan Warrener"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="CenterContainer/CreditsMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Back"
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="MBG1" type="ColorRect" parent="Background"]
+z_index = -10
+material = SubResource("ShaderMaterial_2wh52")
+offset_right = 1919.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.964773, 0.848416, 0.869401, 1)
+
+[connection signal="pressed" from="CenterContainer/MenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuButtons/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuButtons/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuButtons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="toggled" from="CenterContainer/SettingsMenu/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="value_changed" from="CenterContainer/SettingsMenu/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="pressed" from="CenterContainer/SettingsMenu/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CenterContainer/CreditsMenu/Button" to="." method="_on_button_pressed"]
