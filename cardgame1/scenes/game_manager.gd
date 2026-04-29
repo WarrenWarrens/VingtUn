@@ -7,15 +7,44 @@ var money := 100
 var round_number := 1
 var last_played_sum: int = 0
 
-
 func evaluate_play(cards: Array) -> void:
-	last_played_sum = calculate_best_sum(cards)
-	print("Cards played sum: ", last_played_sum, " | Ceiling: ", ceiling)
+	var discard_slot = get_node_or_null("/root/Main/GameView/DiscardSlot")
+	var discard_sum = discard_slot.get_sum() if discard_slot else 0
+	var play_sum = calculate_best_sum(cards)
+
+	# Subtract discard pile from played hand
+	last_played_sum = play_sum - discard_sum
+	print("Play sum: ", play_sum, " | Discard sum: ", discard_sum, 
+		  " | Final: ", last_played_sum, " | Ceiling: ", ceiling)
+
 	if last_played_sum > ceiling:
 		trigger_game_over()
 	else:
 		trigger_round_win()
-		
+
+func trigger_round_win() -> void:
+	ceiling -= 1
+	round_number += 1
+
+	# Clear discard slot alongside card slot
+	var discard_slot = get_node_or_null("/root/Main/GameView/DiscardSlot")
+	if discard_slot:
+		discard_slot.clear_slot()
+
+	var payout = calculate_payout(last_played_sum)
+	if payout > 0:
+		add_money(payout)
+		print("Payout: $", payout)
+
+	# ... rest of your reset logic
+#func evaluate_play(cards: Array) -> void:
+	#last_played_sum = calculate_best_sum(cards)
+	#print("Cards played sum: ", last_played_sum, " | Ceiling: ", ceiling)
+	#if last_played_sum > ceiling:
+		#trigger_game_over()
+	#else:
+		#trigger_round_win()
+		#
 
 	
 func calculate_best_sum(cards: Array) -> int:
@@ -43,15 +72,14 @@ func trigger_game_over() -> void:
 	get_tree().quit()
 
 
-func trigger_round_win() -> void:
-	
-	ceiling -= 1
-	round_number += 1
-	var payout = calculate_payout(last_played_sum)
-	if payout > 0:
-		add_money(payout)
-		print("Payout: $", payout)
-	refresh_gui()
+#func trigger_round_win() -> void:
+	#ceiling -= 1
+	#round_number += 1
+	#var payout = calculate_payout(last_played_sum)
+	#if payout > 0:
+		#add_money(payout)
+		#print("Payout: $", payout)
+	#refresh_gui()
 
 	var deck = get_node("/root/Main/GameView/Deck")
 	var player_hand = get_node("/root/Main/GameView/PlayerHand")

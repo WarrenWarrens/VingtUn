@@ -21,8 +21,13 @@ func refresh() -> void:
 	if discard_label:
 		var discard_slot = get_node_or_null("/root/Main/GameView/DiscardSlot")
 		if discard_slot:
-			var remaining = discard_slot.MAX_DISCARDS - discard_slot.discard_count
+			var remaining = discard_slot.MAX_CARDS - discard_slot.cards_in_slot.size()
 			discard_label.text = "Discards Left: " + str(remaining)
+	#if discard_label:
+		#var discard_slot = get_node_or_null("/root/Main/GameView/DiscardSlot")
+		#if discard_slot:
+			#var remaining = discard_slot.MAX_DISCARDS - discard_slot.discard_count
+			#discard_label.text = "Discards Left: " + str(remaining)
 	var deck = get_node_or_null("/root/Main/GameView/Deck")
 	if deck:
 		if deck_total_label:

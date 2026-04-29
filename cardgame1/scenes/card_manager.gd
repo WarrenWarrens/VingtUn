@@ -33,17 +33,42 @@ func start_drag(card):
 	card.global_position = original_pos
 	
 
-	
-func finish_drag():
-	card_being_dragged.scale = Vector2(2.7, 2.7)
+	#
+#func finish_drag():
+	#card_being_dragged.scale = Vector2(2.7, 2.7)
+#
+	#var discard_slot_found = raycast_check_for_discard_slot()
+	#if discard_slot_found and discard_slot_found.has_method("discard_card") and not discard_slot_found.is_full():
+		#reparent_card_back(card_being_dragged)
+		#discard_slot_found.discard_card(card_being_dragged)
+		#card_being_dragged = null
+		#return
+#
+	#var card_slot_found = raycast_check_for_card_slot()
+	#if card_slot_found and card_slot_found.has_method("add_card") and not card_slot_found.is_full():
+		#reparent_card_back(card_being_dragged)
+		#player_hand_reference.remove_card_from_hand(card_being_dragged)
+		#card_slot_found.add_card(card_being_dragged)
+		#card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
+	#else:
+		#reparent_card_back(card_being_dragged)
+		#player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
+	#card_being_dragged = null
 
+func finish_drag():
+	card_being_dragged.scale = Vector2(1.05, 1.05)
+
+	# Check discard slot first
 	var discard_slot_found = raycast_check_for_discard_slot()
-	if discard_slot_found and discard_slot_found.has_method("discard_card") and not discard_slot_found.is_full():
+	if discard_slot_found and discard_slot_found.has_method("add_card") and not discard_slot_found.is_full():
 		reparent_card_back(card_being_dragged)
-		discard_slot_found.discard_card(card_being_dragged)
+		player_hand_reference.remove_card_from_hand(card_being_dragged)
+		discard_slot_found.add_card(card_being_dragged)
+		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
 		card_being_dragged = null
 		return
 
+	# Then check play slot
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and card_slot_found.has_method("add_card") and not card_slot_found.is_full():
 		reparent_card_back(card_being_dragged)
@@ -54,7 +79,7 @@ func finish_drag():
 		reparent_card_back(card_being_dragged)
 		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	card_being_dragged = null
-
+	
 func reparent_card_back(card):
 	var original_pos = card.global_position
 	card.reparent(get_node("../CardManager"))  
