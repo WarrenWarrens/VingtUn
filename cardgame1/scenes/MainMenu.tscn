@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1exggoon56x5"]
+[gd_scene format=3 uid="uid://d1exggoon56x5"]
 
 [ext_resource type="Script" uid="uid://cklvk7rqmhhr" path="res://scenes/main_menu.gd" id="1_yqorp"]
 [ext_resource type="Shader" uid="uid://4huo4gj6suvn" path="res://scenes/main.gdshader" id="2_0ykhv"]
@@ -19,62 +19,62 @@ shader_parameter/contrast = 2.0
 shader_parameter/spin_amount = 0.36
 shader_parameter/pixel_filter = 700.0
 
-[node name="MainMenu" type="Node2D"]
+[node name="MainMenu" type="Node2D" unique_id=1548827134]
 script = ExtResource("1_yqorp")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1917742896]
 offset_right = 1920.0
 offset_bottom = 500.0
 theme_override_font_sizes/font_size = 300
 text = "Vingt-Un"
 horizontal_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1329982801]
 offset_top = 500.0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="MenuButtons" type="VBoxContainer" parent="CenterContainer"]
+[node name="MenuButtons" type="VBoxContainer" parent="CenterContainer" unique_id=1936118309]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Play" type="Button" parent="CenterContainer/MenuButtons"]
+[node name="Play" type="Button" parent="CenterContainer/MenuButtons" unique_id=344681550]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Play"
 
-[node name="Options" type="Button" parent="CenterContainer/MenuButtons"]
+[node name="Options" type="Button" parent="CenterContainer/MenuButtons" unique_id=1774886811]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Settings"
 
-[node name="Credits" type="Button" parent="CenterContainer/MenuButtons"]
+[node name="Credits" type="Button" parent="CenterContainer/MenuButtons" unique_id=142843401]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Credits"
 
-[node name="Exit" type="Button" parent="CenterContainer/MenuButtons"]
+[node name="Exit" type="Button" parent="CenterContainer/MenuButtons" unique_id=789828632]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Exit"
 
-[node name="SettingsMenu" type="VBoxContainer" parent="CenterContainer"]
+[node name="SettingsMenu" type="VBoxContainer" parent="CenterContainer" unique_id=355836299]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Fullscreen" type="CheckBox" parent="CenterContainer/SettingsMenu"]
+[node name="Fullscreen" type="CheckBox" parent="CenterContainer/SettingsMenu" unique_id=330816823]
 layout_mode = 2
 theme_override_font_sizes/font_size = 75
 text = "Fullscreen"
 
-[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/SettingsMenu"]
+[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/SettingsMenu" unique_id=906477827]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 
-[node name="Label" type="Label" parent="CenterContainer/SettingsMenu/MusicVolumeSlider"]
+[node name="Label" type="Label" parent="CenterContainer/SettingsMenu/MusicVolumeSlider" unique_id=1450027092]
 custom_minimum_size = Vector2(484, 55)
 layout_mode = 0
 offset_top = -16.0
@@ -84,16 +84,16 @@ theme_override_font_sizes/font_size = 40
 text = "Music Volume"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="CenterContainer/SettingsMenu"]
+[node name="Button" type="Button" parent="CenterContainer/SettingsMenu" unique_id=1782225337]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Back"
 
-[node name="CreditsMenu" type="VBoxContainer" parent="CenterContainer"]
+[node name="CreditsMenu" type="VBoxContainer" parent="CenterContainer" unique_id=1086586259]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/CreditsMenu"]
+[node name="Label" type="Label" parent="CenterContainer/CreditsMenu" unique_id=2111422468]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 120
@@ -101,15 +101,15 @@ text = "Ryan Warrener"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Button" type="Button" parent="CenterContainer/CreditsMenu"]
+[node name="Button" type="Button" parent="CenterContainer/CreditsMenu" unique_id=1103010716]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Back"
 
-[node name="Background" type="CanvasLayer" parent="."]
+[node name="Background" type="CanvasLayer" parent="." unique_id=163539596]
 layer = -1
 
-[node name="MBG1" type="ColorRect" parent="Background"]
+[node name="MBG1" type="ColorRect" parent="Background" unique_id=1362850085]
 z_index = -10
 material = SubResource("ShaderMaterial_2wh52")
 offset_right = 1919.0

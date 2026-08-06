@@ -4,6 +4,7 @@ const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_CARD_SLOT = 2
 const DEFAULT_CARD_MOVE_SPEED = 0.1
 const COLLISION_MASK_DISCARD_SLOT = 8  
+#reboot
 @onready var drag_layer = $"../Main/DragLayer" 
 
 
